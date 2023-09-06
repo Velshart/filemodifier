@@ -46,7 +46,7 @@ public class Main {
                 break;
 
             } catch (IOException e) {
-                System.out.println("An error occured while modifying the file.");
+                System.out.println("An error occurred while modifying the file.");
             }
         }
         scanner.close();
