@@ -8,7 +8,8 @@ import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) {
-        Set<Character> lettersToBeReplacedByNumbers = new HashSet<>(Arrays.asList('I', 'E', 'A', 'S', 'B'));
+        List<Character> lettersToBeReplacedByNumbers = new LinkedList<>(Arrays.asList('I', 'E', 'A', 'S', 'B'));
+        List<Character> numbersToReplaceLetters = new LinkedList<>(Arrays.asList('1', '3', '4', '5', '8'));
 
         Scanner scanner = new Scanner(System.in);
 
@@ -25,9 +26,17 @@ public class Main {
 
             try {
                 List<String> fileLines = Files.readAllLines(filePath);
-
                 List<String> modifiedFileLines = fileLines.stream()
                         .filter(s -> s.length() >= 3 && s.length() <= 5 || s.length() == 7)
+                        .map(s -> {
+                            char secondLetter = s.charAt(1);
+                            //lettersToBeReplacedByNumbers.contains(s.charAt(1)))
+                            StringBuilder stringBuilder = new StringBuilder(s);
+                            if(s.length() == 7 && lettersToBeReplacedByNumbers.contains(secondLetter)) {
+                                stringBuilder.setCharAt(1, numbersToReplaceLetters.get(lettersToBeReplacedByNumbers.indexOf(secondLetter)));
+                            }
+                            return stringBuilder.toString();
+                        })
                         .map(s -> Normalizer.normalize(s, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]|\\p{M}", "").toUpperCase())
                         .collect(Collectors.toList());
 
