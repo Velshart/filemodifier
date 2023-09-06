@@ -3,12 +3,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.text.Normalizer;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) {
+        Set<Character> lettersToBeReplacedByNumbers = new HashSet<>(Arrays.asList('I', 'E', 'A', 'S', 'B'));
+
         Scanner scanner = new Scanner(System.in);
 
         Path filePath;
@@ -22,12 +23,11 @@ public class Main {
                 break;
             }
 
-
             try {
                 List<String> fileLines = Files.readAllLines(filePath);
 
                 List<String> modifiedFileLines = fileLines.stream()
-                        .filter(s -> s.length() >= 3 && s.length() <= 7)
+                        .filter(s -> s.length() >= 3 && s.length() <= 5 || s.length() == 7)
                         .map(s -> Normalizer.normalize(s, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]|\\p{M}", "").toUpperCase())
                         .collect(Collectors.toList());
 
