@@ -41,8 +41,10 @@ public class Main {
                 List<String> modifiedFileLines = fileLines.stream()
                         .map(word -> {
                             if(word.length() == 7) {
+
                                 char secondLetter = word.charAt(1);
                                 StringBuilder stringBuilder = new StringBuilder(word);
+
                                 if(lettersToBeReplacedByNumbers.containsKey(secondLetter)) {
                                     stringBuilder.setCharAt(1, lettersToBeReplacedByNumbers.get(secondLetter));
                                     return stringBuilder.toString();
