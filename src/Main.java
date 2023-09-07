@@ -3,7 +3,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.text.Normalizer;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class Main {
@@ -16,8 +19,6 @@ public class Main {
         lettersToBeReplacedByNumbers2.put('a', '4');
         lettersToBeReplacedByNumbers2.put('s', '5');
         lettersToBeReplacedByNumbers2.put('b', '8');
-
-
 
         Scanner scanner = new Scanner(System.in);
 
