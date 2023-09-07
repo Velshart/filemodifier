@@ -3,16 +3,21 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.text.Normalizer;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) {
-        List<Character> lettersToBeReplacedByNumbers = new LinkedList<>(Arrays.asList('i', 'e', 'a', 's', 'b'));
-        List<Character> numbersToReplaceLetters = new LinkedList<>(Arrays.asList('1', '3', '4', '5', '8'));
+
+        Map<Character, Character> lettersToBeReplacedByNumbers2 = new HashMap<>();
+
+        lettersToBeReplacedByNumbers2.put('i', '1');
+        lettersToBeReplacedByNumbers2.put('e', '3');
+        lettersToBeReplacedByNumbers2.put('a', '4');
+        lettersToBeReplacedByNumbers2.put('s', '5');
+        lettersToBeReplacedByNumbers2.put('b', '8');
+
+
 
         Scanner scanner = new Scanner(System.in);
 
@@ -30,14 +35,14 @@ public class Main {
             try {
                 List<String> fileLines = Files.readAllLines(filePath);
                 fileLines.removeIf(word -> word.length() < 3 || (word.length() > 5 && word.length() != 7));
-                fileLines.removeIf(s -> s.length() == 7 && !lettersToBeReplacedByNumbers.contains(s.charAt(1)));
+                fileLines.removeIf(s -> s.length() == 7 && !lettersToBeReplacedByNumbers2.containsKey(s.charAt(1)));
 
                 List<String> modifiedFileLines = fileLines.stream()
                         .map(s -> {
                             char secondLetter = s.charAt(1);
                             StringBuilder stringBuilder = new StringBuilder(s);
-                            if (s.length() == 7 && lettersToBeReplacedByNumbers.contains(secondLetter)) {
-                                stringBuilder.setCharAt(1, numbersToReplaceLetters.get(lettersToBeReplacedByNumbers.indexOf(secondLetter)));
+                            if (s.length() == 7 && lettersToBeReplacedByNumbers2.containsKey(secondLetter)) {
+                                stringBuilder.setCharAt(1, lettersToBeReplacedByNumbers2.get(secondLetter));
                             }
                             return stringBuilder.toString();
                         })
