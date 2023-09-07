@@ -3,12 +3,15 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.text.Normalizer;
-import java.util.*;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) {
-        List<Character> lettersToBeReplacedByNumbers = new LinkedList<>(Arrays.asList('I', 'E', 'A', 'S', 'B'));
+        List<Character> lettersToBeReplacedByNumbers = new LinkedList<>(Arrays.asList('i', 'e', 'a', 's', 'b'));
         List<Character> numbersToReplaceLetters = new LinkedList<>(Arrays.asList('1', '3', '4', '5', '8'));
 
         Scanner scanner = new Scanner(System.in);
@@ -26,13 +29,14 @@ public class Main {
 
             try {
                 List<String> fileLines = Files.readAllLines(filePath);
+                fileLines.removeIf(word -> word.length() < 3 || (word.length() > 5 && word.length() != 7));
+                fileLines.removeIf(s -> s.length() == 7 && !lettersToBeReplacedByNumbers.contains(s.charAt(1)));
+
                 List<String> modifiedFileLines = fileLines.stream()
-                        .filter(s -> s.length() >= 3 && s.length() <= 5 || s.length() == 7)
                         .map(s -> {
                             char secondLetter = s.charAt(1);
-                            //lettersToBeReplacedByNumbers.contains(s.charAt(1)))
                             StringBuilder stringBuilder = new StringBuilder(s);
-                            if(s.length() == 7 && lettersToBeReplacedByNumbers.contains(secondLetter)) {
+                            if (s.length() == 7 && lettersToBeReplacedByNumbers.contains(secondLetter)) {
                                 stringBuilder.setCharAt(1, numbersToReplaceLetters.get(lettersToBeReplacedByNumbers.indexOf(secondLetter)));
                             }
                             return stringBuilder.toString();
