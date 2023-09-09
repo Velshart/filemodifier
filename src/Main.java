@@ -54,7 +54,7 @@ public class Main {
                         })
                         .map(word -> Normalizer.normalize(word, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]|\\p{M}", "").toUpperCase())
                         .map(word -> {
-                            if(word.length() == 7) {
+                            if(word.length() > 5) {
                                 return word.substring(0, 2) + " " + word.substring(2);
                             }
                             return word;
